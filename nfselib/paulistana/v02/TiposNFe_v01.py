@@ -363,8 +363,8 @@ except ImportError as exp:
             for patterns1 in patterns:
                 found2 = False
                 for patterns2 in patterns1:
-                    mo = re_.search(patterns2, target)
-                    if mo is not None and len(mo.group(0)) == len(target):
+                    mo = re_.search(patterns2, str(target))
+                    if mo is not None and len(mo.group(0)) == len(str(target)):
                         found2 = True
                         break
                 if not found2:
@@ -2659,7 +2659,7 @@ class tpRPS(GeneratedsSuper):
         self.TipoRPS = TipoRPS
         self.validate_tpTipoRPS(self.TipoRPS)
         if isinstance(DataEmissao, BaseStrType_):
-            initvalue_ = datetime_.datetime.strptime(DataEmissao, '%Y-%m-%d').date()
+            initvalue_ = datetime_.datetime.strptime(DataEmissao, '%Y-%m-%dT%H:%M:%S').date()
         else:
             initvalue_ = DataEmissao
         self.DataEmissao = initvalue_
@@ -2761,6 +2761,7 @@ class tpRPS(GeneratedsSuper):
                 warnings_.warn('Value "%(value)s" does not match xsd enumeration restriction on tpStatusNFe' % {"value" : value.encode("utf-8")} )
     def validate_tpTributacaoNFe(self, value):
         # Validate type tpTributacaoNFe, a restriction on xs:string.
+        value = str(value)
         if value is not None and Validate_simpletypes_:
             if len(value) > 1:
                 warnings_.warn('Value "%(value)s" does not match xsd maxLength restriction on tpTributacaoNFe' % {"value" : value.encode("utf-8")} )
@@ -2775,7 +2776,7 @@ class tpRPS(GeneratedsSuper):
                 warnings_.warn('Value "%(value)s" does not match xsd maxInclusive restriction on tpValor' % {"value" : value} )
             if not self.gds_validate_simple_patterns(
                     self.validate_tpValor_patterns_, value):
-                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_tpValor_patterns_, ))
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (str(value).encode('utf-8'), self.validate_tpValor_patterns_, ))
     validate_tpValor_patterns_ = [['^0|0\\.[0-9]{2}|[1-9]{1}[0-9]{0,12}(\\.[0-9]{0,2})?$']]
     def validate_tpCodigoServico(self, value):
         # Validate type tpCodigoServico, a restriction on xs:int.
@@ -2835,6 +2836,7 @@ class tpRPS(GeneratedsSuper):
                 warnings_.warn('Value "%(value)s" does not match xsd maxInclusive restriction on tpPercentualCargaTributaria' % {"value" : value} )
     def validate_tpFonteCargaTributaria(self, value):
         # Validate type tpFonteCargaTributaria, a restriction on xs:string.
+        value = str(value)
         if value is not None and Validate_simpletypes_:
             if len(value) > 10:
                 warnings_.warn('Value "%(value)s" does not match xsd maxLength restriction on tpFonteCargaTributaria' % {"value" : value.encode("utf-8")} )
