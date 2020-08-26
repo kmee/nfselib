@@ -107,7 +107,7 @@ def parsexmlstring_(instring, parser=None, **kwargs):
 #
 
 try:
-    from generatedsnamespaces import GenerateDSNamespaceDefs as GenerateDSNamespaceDefs_
+    from nfselib.paulistana.v02.generatedsnamespaces import GenerateDSNamespaceDefs as GenerateDSNamespaceDefs_
 except ImportError:
     GenerateDSNamespaceDefs_ = {}
 try:
@@ -146,7 +146,7 @@ except ImportError as exp:
             else:
                 return input_data
         def gds_format_base64(self, input_data, input_name=''):
-            return base64.b64encode(input_data)
+            return base64.b64encode(input_data).decode('ascii')
         def gds_validate_base64(self, input_data, node=None, input_name=''):
             return input_data
         def gds_format_integer(self, input_data, input_name=''):
@@ -165,7 +165,10 @@ except ImportError as exp:
                     raise_parse_error(node, 'Requires sequence of integers')
             return values
         def gds_format_float(self, input_data, input_name=''):
-            return ('%.15f' % input_data).rstrip('0')
+            if input_data.is_integer():
+                return int(input_data)
+            else:
+                return ('%.15f' % input_data).rstrip('0')
         def gds_validate_float(self, input_data, node=None, input_name=''):
             return input_data
         def gds_format_float_list(self, input_data, input_name=''):
@@ -968,10 +971,10 @@ class tpCPFCNPJ(GeneratedsSuper):
             eol_ = ''
         if self.CPF is not None:
             showIndent(outfile, level, pretty_print)
-            outfile.write('<%sCPF>%s</%sCPF>%s' % (namespaceprefix_ , self.gds_encode(self.gds_format_string(quote_xml(self.CPF), input_name='CPF')), namespaceprefix_ , eol_))
+            outfile.write('<%sCPF>%s</%sCPF>%s' % (namespaceprefix_ , self.gds_encode(self.gds_format_string(self.CPF, input_name='CPF')), namespaceprefix_ , eol_))
         if self.CNPJ is not None:
             showIndent(outfile, level, pretty_print)
-            outfile.write('<%sCNPJ>%s</%sCNPJ>%s' % (namespaceprefix_ , self.gds_encode(self.gds_format_string(quote_xml(self.CNPJ), input_name='CNPJ')), namespaceprefix_ , eol_))
+            outfile.write('<%sCNPJ>%s</%sCNPJ>%s' % (namespaceprefix_ , self.gds_encode(self.gds_format_string(self.CNPJ, input_name='CNPJ')), namespaceprefix_ , eol_))
     def build(self, node):
         already_processed = set()
         self.buildAttributes(node, node.attrib, already_processed)
@@ -1295,13 +1298,13 @@ class tpChaveRPS(GeneratedsSuper):
             eol_ = ''
         if self.InscricaoPrestador is not None:
             showIndent(outfile, level, pretty_print)
-            outfile.write('<%sInscricaoPrestador>%s</%sInscricaoPrestador>%s' % (namespaceprefix_ , self.gds_format_integer(self.InscricaoPrestador, input_name='InscricaoPrestador'), namespaceprefix_ , eol_))
+            outfile.write('<%sInscricaoPrestador>%s</%sInscricaoPrestador>%s' % (namespaceprefix_ , self.gds_format_string(self.InscricaoPrestador, input_name='InscricaoPrestador'), namespaceprefix_ , eol_))
         if self.SerieRPS is not None:
             showIndent(outfile, level, pretty_print)
             outfile.write('<%sSerieRPS>%s</%sSerieRPS>%s' % (namespaceprefix_ , self.gds_encode(self.gds_format_string(quote_xml(self.SerieRPS), input_name='SerieRPS')), namespaceprefix_ , eol_))
         if self.NumeroRPS is not None:
             showIndent(outfile, level, pretty_print)
-            outfile.write('<%sNumeroRPS>%s</%sNumeroRPS>%s' % (namespaceprefix_ , self.gds_format_integer(self.NumeroRPS, input_name='NumeroRPS'), namespaceprefix_ , eol_))
+            outfile.write('<%sNumeroRPS>%s</%sNumeroRPS>%s' % (namespaceprefix_ , self.gds_format_string(self.NumeroRPS, input_name='NumeroRPS'), namespaceprefix_ , eol_))
     def build(self, node):
         already_processed = set()
         self.buildAttributes(node, node.attrib, already_processed)
@@ -1496,7 +1499,7 @@ class tpEndereco(GeneratedsSuper):
             outfile.write('<%sUF>%s</%sUF>%s' % (namespaceprefix_ , self.gds_encode(self.gds_format_string(quote_xml(self.UF), input_name='UF')), namespaceprefix_ , eol_))
         if self.CEP is not None:
             showIndent(outfile, level, pretty_print)
-            outfile.write('<%sCEP>%s</%sCEP>%s' % (namespaceprefix_ , self.gds_format_integer(self.CEP, input_name='CEP'), namespaceprefix_ , eol_))
+            outfile.write('<%sCEP>%s</%sCEP>%s' % (namespaceprefix_ , self.gds_format_string(self.CEP, input_name='CEP'), namespaceprefix_ , eol_))
     def build(self, node):
         already_processed = set()
         self.buildAttributes(node, node.attrib, already_processed)
@@ -2776,7 +2779,7 @@ class tpRPS(GeneratedsSuper):
                 warnings_.warn('Value "%(value)s" does not match xsd maxInclusive restriction on tpValor' % {"value" : value} )
             if not self.gds_validate_simple_patterns(
                     self.validate_tpValor_patterns_, value):
-                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (str(value).encode('utf-8'), self.validate_tpValor_patterns_, ))
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (str(value), self.validate_tpValor_patterns_, ))
     validate_tpValor_patterns_ = [['^0|0\\.[0-9]{2}|[1-9]{1}[0-9]{0,12}(\\.[0-9]{0,2})?$']]
     def validate_tpCodigoServico(self, value):
         # Validate type tpCodigoServico, a restriction on xs:int.
@@ -2897,7 +2900,7 @@ class tpRPS(GeneratedsSuper):
             return True
         else:
             return False
-    def export(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='tpRPS', pretty_print=True):
+    def export(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='RPS', pretty_print=True):
         imported_ns_def_ = GenerateDSNamespaceDefs_.get('tpRPS')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
@@ -2942,30 +2945,30 @@ class tpRPS(GeneratedsSuper):
         if self.TributacaoRPS is not None:
             showIndent(outfile, level, pretty_print)
             outfile.write('<%sTributacaoRPS>%s</%sTributacaoRPS>%s' % (namespaceprefix_ , self.gds_encode(self.gds_format_string(quote_xml(self.TributacaoRPS), input_name='TributacaoRPS')), namespaceprefix_ , eol_))
-        if self.ValorServicos is not None:
+        if self.ValorServicos is not None and self.ValorServicos != 0:
             showIndent(outfile, level, pretty_print)
             outfile.write('<%sValorServicos>%s</%sValorServicos>%s' % (namespaceprefix_ , self.gds_format_float(self.ValorServicos, input_name='ValorServicos'), namespaceprefix_ , eol_))
         if self.ValorDeducoes is not None:
             showIndent(outfile, level, pretty_print)
             outfile.write('<%sValorDeducoes>%s</%sValorDeducoes>%s' % (namespaceprefix_ , self.gds_format_float(self.ValorDeducoes, input_name='ValorDeducoes'), namespaceprefix_ , eol_))
-        if self.ValorPIS is not None:
+        if self.ValorPIS is not None and self.ValorPIS != 0:
             showIndent(outfile, level, pretty_print)
             outfile.write('<%sValorPIS>%s</%sValorPIS>%s' % (namespaceprefix_ , self.gds_format_float(self.ValorPIS, input_name='ValorPIS'), namespaceprefix_ , eol_))
-        if self.ValorCOFINS is not None:
+        if self.ValorCOFINS is not None and self.ValorCOFINS != 0:
             showIndent(outfile, level, pretty_print)
             outfile.write('<%sValorCOFINS>%s</%sValorCOFINS>%s' % (namespaceprefix_ , self.gds_format_float(self.ValorCOFINS, input_name='ValorCOFINS'), namespaceprefix_ , eol_))
-        if self.ValorINSS is not None:
+        if self.ValorINSS is not None and self.ValorINSS != 0:
             showIndent(outfile, level, pretty_print)
             outfile.write('<%sValorINSS>%s</%sValorINSS>%s' % (namespaceprefix_ , self.gds_format_float(self.ValorINSS, input_name='ValorINSS'), namespaceprefix_ , eol_))
-        if self.ValorIR is not None:
+        if self.ValorIR is not None and self.ValorIR != 0:
             showIndent(outfile, level, pretty_print)
             outfile.write('<%sValorIR>%s</%sValorIR>%s' % (namespaceprefix_ , self.gds_format_float(self.ValorIR, input_name='ValorIR'), namespaceprefix_ , eol_))
-        if self.ValorCSLL is not None:
+        if self.ValorCSLL is not None and self.ValorCSLL != 0:
             showIndent(outfile, level, pretty_print)
             outfile.write('<%sValorCSLL>%s</%sValorCSLL>%s' % (namespaceprefix_ , self.gds_format_float(self.ValorCSLL, input_name='ValorCSLL'), namespaceprefix_ , eol_))
         if self.CodigoServico is not None:
             showIndent(outfile, level, pretty_print)
-            outfile.write('<%sCodigoServico>%s</%sCodigoServico>%s' % (namespaceprefix_ , self.gds_format_integer(self.CodigoServico, input_name='CodigoServico'), namespaceprefix_ , eol_))
+            outfile.write('<%sCodigoServico>%s</%sCodigoServico>%s' % (namespaceprefix_ , self.gds_format_string(self.CodigoServico, input_name='CodigoServico'), namespaceprefix_ , eol_))
         if self.AliquotaServicos is not None:
             showIndent(outfile, level, pretty_print)
             outfile.write('<%sAliquotaServicos>%s</%sAliquotaServicos>%s' % (namespaceprefix_ , self.gds_format_float(self.AliquotaServicos, input_name='AliquotaServicos'), namespaceprefix_ , eol_))
@@ -2979,7 +2982,7 @@ class tpRPS(GeneratedsSuper):
             outfile.write('<%sInscricaoMunicipalTomador>%s</%sInscricaoMunicipalTomador>%s' % (namespaceprefix_ , self.gds_format_integer(self.InscricaoMunicipalTomador, input_name='InscricaoMunicipalTomador'), namespaceprefix_ , eol_))
         if self.InscricaoEstadualTomador is not None:
             showIndent(outfile, level, pretty_print)
-            outfile.write('<%sInscricaoEstadualTomador>%s</%sInscricaoEstadualTomador>%s' % (namespaceprefix_ , self.gds_format_integer(self.InscricaoEstadualTomador, input_name='InscricaoEstadualTomador'), namespaceprefix_ , eol_))
+            outfile.write('<%sInscricaoEstadualTomador>%s</%sInscricaoEstadualTomador>%s' % (namespaceprefix_ , self.gds_format_string(self.InscricaoEstadualTomador, input_name='InscricaoEstadualTomador'), namespaceprefix_ , eol_))
         if self.RazaoSocialTomador is not None:
             showIndent(outfile, level, pretty_print)
             outfile.write('<%sRazaoSocialTomador>%s</%sRazaoSocialTomador>%s' % (namespaceprefix_ , self.gds_encode(self.gds_format_string(quote_xml(self.RazaoSocialTomador), input_name='RazaoSocialTomador')), namespaceprefix_ , eol_))

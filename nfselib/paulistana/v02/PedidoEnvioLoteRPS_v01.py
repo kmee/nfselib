@@ -107,7 +107,7 @@ def parsexmlstring_(instring, parser=None, **kwargs):
 #
 
 try:
-    from generatedsnamespaces import GenerateDSNamespaceDefs as GenerateDSNamespaceDefs_
+    from nfselib.paulistana.v02.generatedsnamespaces import GenerateDSNamespaceDefs as GenerateDSNamespaceDefs_
 except ImportError:
     GenerateDSNamespaceDefs_ = {}
 try:
@@ -165,7 +165,10 @@ except ImportError as exp:
                     raise_parse_error(node, 'Requires sequence of integers')
             return values
         def gds_format_float(self, input_data, input_name=''):
-            return ('%.15f' % input_data).rstrip('0')
+            if input_data.is_integer():
+                return int(input_data)
+            else:
+                return ('%.15f' % input_data).rstrip('0')
         def gds_validate_float(self, input_data, node=None, input_name=''):
             return input_data
         def gds_format_float_list(self, input_data, input_name=''):
@@ -817,7 +820,7 @@ class PedidoEnvioLoteRPS(GeneratedsSuper):
             self.Cabecalho.export(outfile, level, namespaceprefix_, namespacedef_='', name_='Cabecalho', pretty_print=pretty_print)
         for RPS_ in self.RPS:
             showIndent(outfile, level, pretty_print)
-            outfile.write('<%sRPS>%s</%sRPS>%s' % (namespaceprefix_ , self.gds_encode(self.gds_format_string(quote_xml(RPS_), input_name='RPS')), namespaceprefix_ , eol_))
+            RPS_.export(outfile, level, namespaceprefix_, namespacedef_='', pretty_print=pretty_print)
         if self.Signature is not None:
             showIndent(outfile, level, pretty_print)
             outfile.write('<%sSignature>%s</%sSignature>%s' % (namespaceprefix_ , self.gds_encode(self.gds_format_string(quote_xml(self.Signature), input_name='Signature')), namespaceprefix_ , eol_))
@@ -858,12 +861,12 @@ class CabecalhoType(GeneratedsSuper):
         self.CPFCNPJRemetente = CPFCNPJRemetente
         self.transacao = transacao
         if isinstance(dtInicio, BaseStrType_):
-            initvalue_ = datetime_.datetime.strptime(dtInicio, '%Y-%m-%d').date()
+            initvalue_ = datetime_.datetime.strptime(dtInicio, '%Y-%m-%dT%H:%M:%S').date()
         else:
             initvalue_ = dtInicio
         self.dtInicio = initvalue_
         if isinstance(dtFim, BaseStrType_):
-            initvalue_ = datetime_.datetime.strptime(dtFim, '%Y-%m-%d').date()
+            initvalue_ = datetime_.datetime.strptime(dtFim, '%Y-%m-%dT%H:%M:%S').date()
         else:
             initvalue_ = dtFim
         self.dtFim = initvalue_
@@ -916,7 +919,7 @@ class CabecalhoType(GeneratedsSuper):
         else:
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='CabecalhoType'):
-        if self.Versao != "1" and 'Versao' not in already_processed:
+        if 'Versao' not in already_processed:
             already_processed.add('Versao')
             outfile.write(' Versao=%s' % (quote_attrib(self.Versao), ))
     def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='CabecalhoType', fromsubclass_=False, pretty_print=True):
@@ -926,25 +929,25 @@ class CabecalhoType(GeneratedsSuper):
             eol_ = ''
         if self.CPFCNPJRemetente is not None:
             showIndent(outfile, level, pretty_print)
-            outfile.write('<%sCPFCNPJRemetente>%s</%sCPFCNPJRemetente>%s' % (namespaceprefix_ , self.gds_encode(self.gds_format_string(quote_xml(self.CPFCNPJRemetente), input_name='CPFCNPJRemetente')), namespaceprefix_ , eol_))
+            self.CPFCNPJRemetente.export(outfile, level, namespaceprefix_, pretty_print=pretty_print, name_='CPFCNPJRemetente')
         if not self.transacao:
             showIndent(outfile, level, pretty_print)
             outfile.write('<%stransacao>%s</%stransacao>%s' % (namespaceprefix_ , self.gds_format_boolean(self.transacao, input_name='transacao'), namespaceprefix_ , eol_))
         if self.dtInicio is not None:
             showIndent(outfile, level, pretty_print)
-            outfile.write('<%sdtInicio>%s</%sdtInicio>%s' % (namespaceprefix_ , self.gds_format_date(self.dtInicio, input_name='dtInicio'), namespaceprefix_ , eol_))
+            outfile.write('<%sdtInicio>%s</%sdtInicio>%s' % (namespaceprefix_ , self.dtInicio, namespaceprefix_ , eol_))
         if self.dtFim is not None:
             showIndent(outfile, level, pretty_print)
-            outfile.write('<%sdtFim>%s</%sdtFim>%s' % (namespaceprefix_ , self.gds_format_date(self.dtFim, input_name='dtFim'), namespaceprefix_ , eol_))
+            outfile.write('<%sdtFim>%s</%sdtFim>%s' % (namespaceprefix_ , self.dtFim, namespaceprefix_ , eol_))
         if self.QtdRPS is not None:
             showIndent(outfile, level, pretty_print)
             outfile.write('<%sQtdRPS>%s</%sQtdRPS>%s' % (namespaceprefix_ , self.gds_encode(self.gds_format_string(quote_xml(self.QtdRPS), input_name='QtdRPS')), namespaceprefix_ , eol_))
         if self.ValorTotalServicos is not None:
             showIndent(outfile, level, pretty_print)
-            outfile.write('<%sValorTotalServicos>%s</%sValorTotalServicos>%s' % (namespaceprefix_ , self.gds_encode(self.gds_format_string(quote_xml(self.ValorTotalServicos), input_name='ValorTotalServicos')), namespaceprefix_ , eol_))
+            outfile.write('<%sValorTotalServicos>%s</%sValorTotalServicos>%s' % (namespaceprefix_ , self.gds_encode(self.gds_format_float(self.ValorTotalServicos, input_name='ValorTotalServicos')), namespaceprefix_ , eol_))
         if self.ValorTotalDeducoes is not None:
             showIndent(outfile, level, pretty_print)
-            outfile.write('<%sValorTotalDeducoes>%s</%sValorTotalDeducoes>%s' % (namespaceprefix_ , self.gds_encode(self.gds_format_string(quote_xml(self.ValorTotalDeducoes), input_name='ValorTotalDeducoes')), namespaceprefix_ , eol_))
+            outfile.write('<%sValorTotalDeducoes>%s</%sValorTotalDeducoes>%s' % (namespaceprefix_ , self.gds_encode(self.gds_format_float(self.ValorTotalDeducoes, )), namespaceprefix_ , eol_))
     def build(self, node):
         already_processed = set()
         self.buildAttributes(node, node.attrib, already_processed)
