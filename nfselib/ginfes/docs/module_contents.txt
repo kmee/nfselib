@@ -17,3 +17,19 @@ Module contents
     :members:
     :undoc-members:
     :show-inheritance:
+.. automodule:: servico_consultar_situacao_lote_rps_envio
+    :members:
+    :undoc-members:
+    :show-inheritance:
+.. automodule:: servico_consultar_lote_rps_envio
+    :members:
+    :undoc-members:
+    :show-inheritance:
+.. automodule:: servico_cancelar_nfse_envio
+    :members:
+    :undoc-members:
+    :show-inheritance:
+.. automodule:: servico_consultar_nfse_rps_envio
+    :members:
+    :undoc-members:
+    :show-inheritance:
