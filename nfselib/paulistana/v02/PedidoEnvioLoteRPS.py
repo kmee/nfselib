@@ -110,11 +110,11 @@ def parsexmlstring_(instring, parser=None, **kwargs):
 #
 
 try:
-    from generatedsnamespaces import GenerateDSNamespaceDefs as GenerateDSNamespaceDefs_
+    from .generatedsnamespaces import GenerateDSNamespaceDefs as GenerateDSNamespaceDefs_
 except ImportError:
     GenerateDSNamespaceDefs_ = {}
 try:
-    from generatedsnamespaces import GenerateDSNamespaceTypePrefixes as GenerateDSNamespaceTypePrefixes_
+    from .generatedsnamespaces import GenerateDSNamespaceTypePrefixes as GenerateDSNamespaceTypePrefixes_
 except ImportError:
     GenerateDSNamespaceTypePrefixes_ = {}
 
@@ -3728,7 +3728,7 @@ class tpRPS(GeneratedsSuper):
         if self.Assinatura is not None:
             namespaceprefix_ = self.Assinatura_nsprefix_ + ':' if (UseCapturedNS_ and self.Assinatura_nsprefix_) else ''
             showIndent(outfile, level, pretty_print)
-            outfile.write('<%sAssinatura>%s</%sAssinatura>%s' % (namespaceprefix_ , self.gds_format_base64(self.Assinatura, input_name='Assinatura'), namespaceprefix_ , eol_))
+            outfile.write('<%sAssinatura>%s</%sAssinatura>%s' % (namespaceprefix_ , self.Assinatura, namespaceprefix_ , eol_))
         if self.ChaveRPS is not None:
             namespaceprefix_ = self.ChaveRPS_nsprefix_ + ':' if (UseCapturedNS_ and self.ChaveRPS_nsprefix_) else ''
             self.ChaveRPS.export(outfile, level, namespaceprefix_, namespacedef_='', name_='ChaveRPS', pretty_print=pretty_print)
