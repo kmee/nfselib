@@ -17,7 +17,7 @@
 #   /tmp/generated/schemas/paulistana/v02/PedidoConsultaNFe_v01.xsd
 #
 # Command line:
-#   /home/luisotavio/Documentos/Projects/produto_12/bin/generateDS.py --no-namespace-defs --no-dates --member-specs="list" --use-getter-setter="none" -f -o "/home/luisotavio/Documentos/Projects/produto_12/src/nfselib/scripts/paulistanalib/v02/PedidoConsultaNFe.py" /tmp/generated/schemas/paulistana/v02/PedidoConsultaNFe_v01.xsd
+#   /home/luisotavio/Documentos/Projects/produto_12/bin/generateDS.py --no-namespace-defs --no-dates --member-specs="list" --use-getter-setter="none" -f -o "/home/luisotavio/Documentos/Projects/produto_12/src/nfselib/paulistanalib/v02/PedidoConsultaNFe.py" /tmp/generated/schemas/paulistana/v02/PedidoConsultaNFe_v01.xsd
 #
 # Current working directory (os.getcwd()):
 #   v02
@@ -963,7 +963,7 @@ class tpOpcaoSimples(str, Enum):
 
 
 class tpStatusNFe(str, Enum):
-    """Tipo referente aos possíveis status de NF-e."""
+    """Tipo referente aos possíveis status de NFS-e."""
     N='N' # Normal.
     C='C' # Cancelada.
     E='E' # Extraviada.
@@ -976,17 +976,9 @@ class tpTipoRPS(str, Enum):
     RPSC='RPS-C' # Cupom.
 
 
-class tpTributacaoNFe(str, Enum):
-    """Tipo referente aos modos de tributação da NFe."""
-    T='T' # Tributação no municipio de São Paulo.
-    F='F' # Tributação fora do municipio de São Paulo.
-    I='I' # Isento.
-    J='J' # ISS Suspenso por Decisão Judicial.
-
-
 class PedidoConsultaNFe(GeneratedsSuper):
-    """Schema utilizado para PEDIDO de consultas de NF-e.Este Schema XML é
-    utilizado pelos prestadores de serviços consultarem NF-e geradas por
+    """Schema utilizado para PEDIDO de consultas de NFS-e.Este Schema XML é
+    utilizado pelos prestadores de serviços consultarem NFS-e geradas por
     eles."""
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -1408,7 +1400,7 @@ class tpCPFCNPJ(GeneratedsSuper):
 
 
 class tpChaveNFeRPS(GeneratedsSuper):
-    """Tipo que representa a chave de uma NF-e e a Chave do RPS que a mesma
+    """Tipo que representa a chave de uma NFS-e e a Chave do RPS que a mesma
     substitui."""
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -1510,7 +1502,7 @@ class tpChaveNFeRPS(GeneratedsSuper):
 
 
 class tpChaveNFe(GeneratedsSuper):
-    """Chave de identificação da NF-e."""
+    """Chave de identificação da NFS-e."""
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_('InscricaoPrestador', ['tpInscricaoMunicipal', 'xs:long'], 0, 0, {'maxOccurs': '1', 'minOccurs': '1', 'name': 'InscricaoPrestador', 'type': 'xs:long'}, None),
@@ -2485,7 +2477,7 @@ class tpInformacoesLote(GeneratedsSuper):
 
 
 class tpNFe(GeneratedsSuper):
-    """Tipo que representa uma NF-e"""
+    """Tipo que representa uma NFS-e"""
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_('Assinatura', ['tpAssinatura', 'xs:base64Binary'], 0, 1, {'maxOccurs': '1', 'minOccurs': '0', 'name': 'Assinatura', 'type': 'xs:base64Binary'}, None),
@@ -2523,11 +2515,23 @@ class tpNFe(GeneratedsSuper):
         MemberSpec_('RazaoSocialTomador', ['tpRazaoSocial', 'xs:string'], 0, 1, {'maxOccurs': '1', 'minOccurs': '0', 'name': 'RazaoSocialTomador', 'type': 'xs:string'}, None),
         MemberSpec_('EnderecoTomador', 'tpEndereco', 0, 1, {'maxOccurs': '1', 'minOccurs': '0', 'name': 'EnderecoTomador', 'type': 'tpEndereco'}, None),
         MemberSpec_('EmailTomador', ['tpEmail', 'xs:string'], 0, 1, {'maxOccurs': '1', 'minOccurs': '0', 'name': 'EmailTomador', 'type': 'xs:string'}, None),
+        MemberSpec_('CPFCNPJIntermediario', 'tpCPFCNPJ', 0, 1, {'maxOccurs': '1', 'minOccurs': '0', 'name': 'CPFCNPJIntermediario', 'type': 'tpCPFCNPJ'}, None),
+        MemberSpec_('InscricaoMunicipalIntermediario', ['tpInscricaoMunicipal', 'xs:long'], 0, 1, {'maxOccurs': '1', 'minOccurs': '0', 'name': 'InscricaoMunicipalIntermediario', 'type': 'xs:long'}, None),
+        MemberSpec_('ISSRetidoIntermediario', 'xs:string', 0, 1, {'maxOccurs': '1', 'minOccurs': '0', 'name': 'ISSRetidoIntermediario', 'type': 'xs:string'}, None),
+        MemberSpec_('EmailIntermediario', ['tpEmail', 'xs:string'], 0, 1, {'maxOccurs': '1', 'minOccurs': '0', 'name': 'EmailIntermediario', 'type': 'xs:string'}, None),
         MemberSpec_('Discriminacao', ['tpDiscriminacao', 'xs:string'], 0, 0, {'maxOccurs': '1', 'minOccurs': '1', 'name': 'Discriminacao', 'type': 'xs:string'}, None),
+        MemberSpec_('ValorCargaTributaria', ['tpValor', 'xs:decimal'], 0, 1, {'maxOccurs': '1', 'minOccurs': '0', 'name': 'ValorCargaTributaria', 'type': 'xs:decimal'}, None),
+        MemberSpec_('PercentualCargaTributaria', ['tpPercentualCargaTributaria', 'xs:decimal'], 0, 1, {'maxOccurs': '1', 'minOccurs': '0', 'name': 'PercentualCargaTributaria', 'type': 'xs:decimal'}, None),
+        MemberSpec_('FonteCargaTributaria', ['tpFonteCargaTributaria', 'xs:string'], 0, 1, {'maxOccurs': '1', 'minOccurs': '0', 'name': 'FonteCargaTributaria', 'type': 'xs:string'}, None),
+        MemberSpec_('CodigoCEI', ['tpNumero', 'xs:long'], 0, 1, {'maxOccurs': '1', 'minOccurs': '0', 'name': 'CodigoCEI', 'type': 'xs:long'}, None),
+        MemberSpec_('MatriculaObra', ['tpNumero', 'xs:long'], 0, 1, {'maxOccurs': '1', 'minOccurs': '0', 'name': 'MatriculaObra', 'type': 'xs:long'}, None),
+        MemberSpec_('MunicipioPrestacao', ['tpCidade', 'xs:int'], 0, 1, {'maxOccurs': '1', 'minOccurs': '0', 'name': 'MunicipioPrestacao', 'type': 'xs:int'}, None),
+        MemberSpec_('NumeroEncapsulamento', ['tpNumero', 'xs:long'], 0, 1, {'maxOccurs': '1', 'minOccurs': '0', 'name': 'NumeroEncapsulamento', 'type': 'xs:long'}, None),
+        MemberSpec_('ValorTotalRecebido', ['tpValor', 'xs:decimal'], 0, 1, {'maxOccurs': '1', 'minOccurs': '0', 'name': 'ValorTotalRecebido', 'type': 'xs:decimal'}, None),
     ]
     subclass = None
     superclass = None
-    def __init__(self, Assinatura=None, ChaveNFe=None, DataEmissaoNFe=None, NumeroLote=None, ChaveRPS=None, TipoRPS=None, DataEmissaoRPS=None, CPFCNPJPrestador=None, RazaoSocialPrestador=None, EnderecoPrestador=None, EmailPrestador=None, StatusNFe=None, DataCancelamento=None, TributacaoNFe=None, OpcaoSimples=None, NumeroGuia=None, DataQuitacaoGuia=None, ValorServicos=None, ValorDeducoes=None, ValorPIS=None, ValorCOFINS=None, ValorINSS=None, ValorIR=None, ValorCSLL=None, CodigoServico=None, AliquotaServicos=None, ValorISS=None, ValorCredito=None, ISSRetido=None, CPFCNPJTomador=None, InscricaoMunicipalTomador=None, InscricaoEstadualTomador=None, RazaoSocialTomador=None, EnderecoTomador=None, EmailTomador=None, Discriminacao=None, gds_collector_=None, **kwargs_):
+    def __init__(self, Assinatura=None, ChaveNFe=None, DataEmissaoNFe=None, NumeroLote=None, ChaveRPS=None, TipoRPS=None, DataEmissaoRPS=None, CPFCNPJPrestador=None, RazaoSocialPrestador=None, EnderecoPrestador=None, EmailPrestador=None, StatusNFe=None, DataCancelamento=None, TributacaoNFe=None, OpcaoSimples=None, NumeroGuia=None, DataQuitacaoGuia=None, ValorServicos=None, ValorDeducoes=None, ValorPIS=None, ValorCOFINS=None, ValorINSS=None, ValorIR=None, ValorCSLL=None, CodigoServico=None, AliquotaServicos=None, ValorISS=None, ValorCredito=None, ISSRetido=None, CPFCNPJTomador=None, InscricaoMunicipalTomador=None, InscricaoEstadualTomador=None, RazaoSocialTomador=None, EnderecoTomador=None, EmailTomador=None, CPFCNPJIntermediario=None, InscricaoMunicipalIntermediario=None, ISSRetidoIntermediario=None, EmailIntermediario=None, Discriminacao=None, ValorCargaTributaria=None, PercentualCargaTributaria=None, FonteCargaTributaria=None, CodigoCEI=None, MatriculaObra=None, MunicipioPrestacao=None, NumeroEncapsulamento=None, ValorTotalRecebido=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
@@ -2643,9 +2647,43 @@ class tpNFe(GeneratedsSuper):
         self.EmailTomador = EmailTomador
         self.validate_tpEmail(self.EmailTomador)
         self.EmailTomador_nsprefix_ = None
+        self.CPFCNPJIntermediario = CPFCNPJIntermediario
+        self.CPFCNPJIntermediario_nsprefix_ = None
+        self.InscricaoMunicipalIntermediario = InscricaoMunicipalIntermediario
+        self.validate_tpInscricaoMunicipal(self.InscricaoMunicipalIntermediario)
+        self.InscricaoMunicipalIntermediario_nsprefix_ = None
+        self.ISSRetidoIntermediario = ISSRetidoIntermediario
+        self.ISSRetidoIntermediario_nsprefix_ = None
+        self.EmailIntermediario = EmailIntermediario
+        self.validate_tpEmail(self.EmailIntermediario)
+        self.EmailIntermediario_nsprefix_ = None
         self.Discriminacao = Discriminacao
         self.validate_tpDiscriminacao(self.Discriminacao)
         self.Discriminacao_nsprefix_ = None
+        self.ValorCargaTributaria = ValorCargaTributaria
+        self.validate_tpValor(self.ValorCargaTributaria)
+        self.ValorCargaTributaria_nsprefix_ = None
+        self.PercentualCargaTributaria = PercentualCargaTributaria
+        self.validate_tpPercentualCargaTributaria(self.PercentualCargaTributaria)
+        self.PercentualCargaTributaria_nsprefix_ = None
+        self.FonteCargaTributaria = FonteCargaTributaria
+        self.validate_tpFonteCargaTributaria(self.FonteCargaTributaria)
+        self.FonteCargaTributaria_nsprefix_ = None
+        self.CodigoCEI = CodigoCEI
+        self.validate_tpNumero(self.CodigoCEI)
+        self.CodigoCEI_nsprefix_ = None
+        self.MatriculaObra = MatriculaObra
+        self.validate_tpNumero(self.MatriculaObra)
+        self.MatriculaObra_nsprefix_ = None
+        self.MunicipioPrestacao = MunicipioPrestacao
+        self.validate_tpCidade(self.MunicipioPrestacao)
+        self.MunicipioPrestacao_nsprefix_ = None
+        self.NumeroEncapsulamento = NumeroEncapsulamento
+        self.validate_tpNumero(self.NumeroEncapsulamento)
+        self.NumeroEncapsulamento_nsprefix_ = None
+        self.ValorTotalRecebido = ValorTotalRecebido
+        self.validate_tpValor(self.ValorTotalRecebido)
+        self.ValorTotalRecebido_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -2725,12 +2763,7 @@ class tpNFe(GeneratedsSuper):
                 lineno = self.gds_get_node_lineno_()
                 self.gds_collector_.add_message('Value "%(value)s"%(lineno)s does not match xsd minLength restriction on tpEmail' % {"value" : encode_str_2_3(value), "lineno": lineno} )
                 result = False
-            if not self.gds_validate_simple_patterns(
-                    self.validate_tpEmail_patterns_, value):
-                self.gds_collector_.add_message('Value "%s" does not match xsd pattern restrictions: %s' % (encode_str_2_3(value), self.validate_tpEmail_patterns_, ))
-                result = False
         return result
-    validate_tpEmail_patterns_ = [['^(^([0-9a-zA-Z]([-.\\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\\w]*[0-9a-zA-Z]\\.)+[a-zA-Z]{2,9})$)$']]
     def validate_tpStatusNFe(self, value):
         result = True
         # Validate type tpStatusNFe, a restriction on xs:string.
@@ -2754,11 +2787,13 @@ class tpNFe(GeneratedsSuper):
                 lineno = self.gds_get_node_lineno_()
                 self.gds_collector_.add_message('Value "%(value)s"%(lineno)s is not of the correct base simple type (str)' % {"value": value, "lineno": lineno, })
                 return False
-            value = value
-            enumerations = ['T', 'F', 'I', 'J']
-            if value not in enumerations:
+            if len(value) > 1:
                 lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message('Value "%(value)s"%(lineno)s does not match xsd enumeration restriction on tpTributacaoNFe' % {"value" : encode_str_2_3(value), "lineno": lineno} )
+                self.gds_collector_.add_message('Value "%(value)s"%(lineno)s does not match xsd maxLength restriction on tpTributacaoNFe' % {"value" : encode_str_2_3(value), "lineno": lineno} )
+                result = False
+            if len(value) < 1:
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message('Value "%(value)s"%(lineno)s does not match xsd minLength restriction on tpTributacaoNFe' % {"value" : encode_str_2_3(value), "lineno": lineno} )
                 result = False
         return result
     def validate_tpOpcaoSimples(self, value):
@@ -2869,11 +2904,59 @@ class tpNFe(GeneratedsSuper):
                 lineno = self.gds_get_node_lineno_()
                 self.gds_collector_.add_message('Value "%(value)s"%(lineno)s does not match xsd maxLength restriction on tpDiscriminacao' % {"value" : encode_str_2_3(value), "lineno": lineno} )
                 result = False
-            if len(value) < 0:
+            if len(value) < 1:
                 lineno = self.gds_get_node_lineno_()
                 self.gds_collector_.add_message('Value "%(value)s"%(lineno)s does not match xsd minLength restriction on tpDiscriminacao' % {"value" : encode_str_2_3(value), "lineno": lineno} )
                 result = False
         return result
+    def validate_tpPercentualCargaTributaria(self, value):
+        result = True
+        # Validate type tpPercentualCargaTributaria, a restriction on xs:decimal.
+        if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
+            if not isinstance(value, decimal_.Decimal):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message('Value "%(value)s"%(lineno)s is not of the correct base simple type (decimal_.Decimal)' % {"value": value, "lineno": lineno, })
+                return False
+            if value < 0:
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message('Value "%(value)s"%(lineno)s does not match xsd minInclusive restriction on tpPercentualCargaTributaria' % {"value": value, "lineno": lineno} )
+                result = False
+            if len(str(value)) >= 7:
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message('Value "%(value)s"%(lineno)s does not match xsd totalDigits restriction on tpPercentualCargaTributaria' % {"value": value, "lineno": lineno} )
+                result = False
+        return result
+    def validate_tpFonteCargaTributaria(self, value):
+        result = True
+        # Validate type tpFonteCargaTributaria, a restriction on xs:string.
+        if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message('Value "%(value)s"%(lineno)s is not of the correct base simple type (str)' % {"value": value, "lineno": lineno, })
+                return False
+            if len(value) > 10:
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message('Value "%(value)s"%(lineno)s does not match xsd maxLength restriction on tpFonteCargaTributaria' % {"value" : encode_str_2_3(value), "lineno": lineno} )
+                result = False
+            if len(value) < 0:
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message('Value "%(value)s"%(lineno)s does not match xsd minLength restriction on tpFonteCargaTributaria' % {"value" : encode_str_2_3(value), "lineno": lineno} )
+                result = False
+        return result
+    def validate_tpCidade(self, value):
+        result = True
+        # Validate type tpCidade, a restriction on xs:int.
+        if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
+            if not isinstance(value, int):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message('Value "%(value)s"%(lineno)s is not of the correct base simple type (int)' % {"value": value, "lineno": lineno, })
+                return False
+            if not self.gds_validate_simple_patterns(
+                    self.validate_tpCidade_patterns_, value):
+                self.gds_collector_.add_message('Value "%s" does not match xsd pattern restrictions: %s' % (encode_str_2_3(value), self.validate_tpCidade_patterns_, ))
+                result = False
+        return result
+    validate_tpCidade_patterns_ = [['^([0-9]{7})$']]
     def hasContent_(self):
         if (
             self.Assinatura is not None or
@@ -2911,7 +2994,19 @@ class tpNFe(GeneratedsSuper):
             self.RazaoSocialTomador is not None or
             self.EnderecoTomador is not None or
             self.EmailTomador is not None or
-            self.Discriminacao is not None
+            self.CPFCNPJIntermediario is not None or
+            self.InscricaoMunicipalIntermediario is not None or
+            self.ISSRetidoIntermediario is not None or
+            self.EmailIntermediario is not None or
+            self.Discriminacao is not None or
+            self.ValorCargaTributaria is not None or
+            self.PercentualCargaTributaria is not None or
+            self.FonteCargaTributaria is not None or
+            self.CodigoCEI is not None or
+            self.MatriculaObra is not None or
+            self.MunicipioPrestacao is not None or
+            self.NumeroEncapsulamento is not None or
+            self.ValorTotalRecebido is not None
         ):
             return True
         else:
@@ -3080,10 +3175,57 @@ class tpNFe(GeneratedsSuper):
             namespaceprefix_ = self.EmailTomador_nsprefix_ + ':' if (UseCapturedNS_ and self.EmailTomador_nsprefix_) else ''
             showIndent(outfile, level, pretty_print)
             outfile.write('<%sEmailTomador>%s</%sEmailTomador>%s' % (namespaceprefix_ , self.gds_encode(self.gds_format_string(quote_xml(self.EmailTomador), input_name='EmailTomador')), namespaceprefix_ , eol_))
+        if self.CPFCNPJIntermediario is not None:
+            namespaceprefix_ = self.CPFCNPJIntermediario_nsprefix_ + ':' if (UseCapturedNS_ and self.CPFCNPJIntermediario_nsprefix_) else ''
+            self.CPFCNPJIntermediario.export(outfile, level, namespaceprefix_, namespacedef_='', name_='CPFCNPJIntermediario', pretty_print=pretty_print)
+        if self.InscricaoMunicipalIntermediario is not None:
+            namespaceprefix_ = self.InscricaoMunicipalIntermediario_nsprefix_ + ':' if (UseCapturedNS_ and self.InscricaoMunicipalIntermediario_nsprefix_) else ''
+            showIndent(outfile, level, pretty_print)
+            outfile.write('<%sInscricaoMunicipalIntermediario>%s</%sInscricaoMunicipalIntermediario>%s' % (namespaceprefix_ , self.gds_format_integer(self.InscricaoMunicipalIntermediario, input_name='InscricaoMunicipalIntermediario'), namespaceprefix_ , eol_))
+        if self.ISSRetidoIntermediario is not None:
+            namespaceprefix_ = self.ISSRetidoIntermediario_nsprefix_ + ':' if (UseCapturedNS_ and self.ISSRetidoIntermediario_nsprefix_) else ''
+            showIndent(outfile, level, pretty_print)
+            outfile.write('<%sISSRetidoIntermediario>%s</%sISSRetidoIntermediario>%s' % (namespaceprefix_ , self.gds_encode(self.gds_format_string(quote_xml(self.ISSRetidoIntermediario), input_name='ISSRetidoIntermediario')), namespaceprefix_ , eol_))
+        if self.EmailIntermediario is not None:
+            namespaceprefix_ = self.EmailIntermediario_nsprefix_ + ':' if (UseCapturedNS_ and self.EmailIntermediario_nsprefix_) else ''
+            showIndent(outfile, level, pretty_print)
+            outfile.write('<%sEmailIntermediario>%s</%sEmailIntermediario>%s' % (namespaceprefix_ , self.gds_encode(self.gds_format_string(quote_xml(self.EmailIntermediario), input_name='EmailIntermediario')), namespaceprefix_ , eol_))
         if self.Discriminacao is not None:
             namespaceprefix_ = self.Discriminacao_nsprefix_ + ':' if (UseCapturedNS_ and self.Discriminacao_nsprefix_) else ''
             showIndent(outfile, level, pretty_print)
             outfile.write('<%sDiscriminacao>%s</%sDiscriminacao>%s' % (namespaceprefix_ , self.gds_encode(self.gds_format_string(quote_xml(self.Discriminacao), input_name='Discriminacao')), namespaceprefix_ , eol_))
+        if self.ValorCargaTributaria is not None:
+            namespaceprefix_ = self.ValorCargaTributaria_nsprefix_ + ':' if (UseCapturedNS_ and self.ValorCargaTributaria_nsprefix_) else ''
+            showIndent(outfile, level, pretty_print)
+            outfile.write('<%sValorCargaTributaria>%s</%sValorCargaTributaria>%s' % (namespaceprefix_ , self.gds_format_decimal(self.ValorCargaTributaria, input_name='ValorCargaTributaria'), namespaceprefix_ , eol_))
+        if self.PercentualCargaTributaria is not None:
+            namespaceprefix_ = self.PercentualCargaTributaria_nsprefix_ + ':' if (UseCapturedNS_ and self.PercentualCargaTributaria_nsprefix_) else ''
+            showIndent(outfile, level, pretty_print)
+            outfile.write('<%sPercentualCargaTributaria>%s</%sPercentualCargaTributaria>%s' % (namespaceprefix_ , self.gds_format_decimal(self.PercentualCargaTributaria, input_name='PercentualCargaTributaria'), namespaceprefix_ , eol_))
+        if self.FonteCargaTributaria is not None:
+            namespaceprefix_ = self.FonteCargaTributaria_nsprefix_ + ':' if (UseCapturedNS_ and self.FonteCargaTributaria_nsprefix_) else ''
+            showIndent(outfile, level, pretty_print)
+            outfile.write('<%sFonteCargaTributaria>%s</%sFonteCargaTributaria>%s' % (namespaceprefix_ , self.gds_encode(self.gds_format_string(quote_xml(self.FonteCargaTributaria), input_name='FonteCargaTributaria')), namespaceprefix_ , eol_))
+        if self.CodigoCEI is not None:
+            namespaceprefix_ = self.CodigoCEI_nsprefix_ + ':' if (UseCapturedNS_ and self.CodigoCEI_nsprefix_) else ''
+            showIndent(outfile, level, pretty_print)
+            outfile.write('<%sCodigoCEI>%s</%sCodigoCEI>%s' % (namespaceprefix_ , self.gds_format_integer(self.CodigoCEI, input_name='CodigoCEI'), namespaceprefix_ , eol_))
+        if self.MatriculaObra is not None:
+            namespaceprefix_ = self.MatriculaObra_nsprefix_ + ':' if (UseCapturedNS_ and self.MatriculaObra_nsprefix_) else ''
+            showIndent(outfile, level, pretty_print)
+            outfile.write('<%sMatriculaObra>%s</%sMatriculaObra>%s' % (namespaceprefix_ , self.gds_format_integer(self.MatriculaObra, input_name='MatriculaObra'), namespaceprefix_ , eol_))
+        if self.MunicipioPrestacao is not None:
+            namespaceprefix_ = self.MunicipioPrestacao_nsprefix_ + ':' if (UseCapturedNS_ and self.MunicipioPrestacao_nsprefix_) else ''
+            showIndent(outfile, level, pretty_print)
+            outfile.write('<%sMunicipioPrestacao>%s</%sMunicipioPrestacao>%s' % (namespaceprefix_ , self.gds_format_integer(self.MunicipioPrestacao, input_name='MunicipioPrestacao'), namespaceprefix_ , eol_))
+        if self.NumeroEncapsulamento is not None:
+            namespaceprefix_ = self.NumeroEncapsulamento_nsprefix_ + ':' if (UseCapturedNS_ and self.NumeroEncapsulamento_nsprefix_) else ''
+            showIndent(outfile, level, pretty_print)
+            outfile.write('<%sNumeroEncapsulamento>%s</%sNumeroEncapsulamento>%s' % (namespaceprefix_ , self.gds_format_integer(self.NumeroEncapsulamento, input_name='NumeroEncapsulamento'), namespaceprefix_ , eol_))
+        if self.ValorTotalRecebido is not None:
+            namespaceprefix_ = self.ValorTotalRecebido_nsprefix_ + ':' if (UseCapturedNS_ and self.ValorTotalRecebido_nsprefix_) else ''
+            showIndent(outfile, level, pretty_print)
+            outfile.write('<%sValorTotalRecebido>%s</%sValorTotalRecebido>%s' % (namespaceprefix_ , self.gds_format_decimal(self.ValorTotalRecebido, input_name='ValorTotalRecebido'), namespaceprefix_ , eol_))
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -3352,6 +3494,33 @@ class tpNFe(GeneratedsSuper):
             self.EmailTomador_nsprefix_ = child_.prefix
             # validate type tpEmail
             self.validate_tpEmail(self.EmailTomador)
+        elif nodeName_ == 'CPFCNPJIntermediario':
+            obj_ = tpCPFCNPJ.factory(parent_object_=self)
+            obj_.build(child_, gds_collector_=gds_collector_)
+            self.CPFCNPJIntermediario = obj_
+            obj_.original_tagname_ = 'CPFCNPJIntermediario'
+        elif nodeName_ == 'InscricaoMunicipalIntermediario' and child_.text:
+            sval_ = child_.text
+            ival_ = self.gds_parse_integer(sval_, node, 'InscricaoMunicipalIntermediario')
+            ival_ = self.gds_validate_integer(ival_, node, 'InscricaoMunicipalIntermediario')
+            self.InscricaoMunicipalIntermediario = ival_
+            self.InscricaoMunicipalIntermediario_nsprefix_ = child_.prefix
+            # validate type tpInscricaoMunicipal
+            self.validate_tpInscricaoMunicipal(self.InscricaoMunicipalIntermediario)
+        elif nodeName_ == 'ISSRetidoIntermediario':
+            value_ = child_.text
+            value_ = self.gds_parse_string(value_, node, 'ISSRetidoIntermediario')
+            value_ = self.gds_validate_string(value_, node, 'ISSRetidoIntermediario')
+            self.ISSRetidoIntermediario = value_
+            self.ISSRetidoIntermediario_nsprefix_ = child_.prefix
+        elif nodeName_ == 'EmailIntermediario':
+            value_ = child_.text
+            value_ = self.gds_parse_string(value_, node, 'EmailIntermediario')
+            value_ = self.gds_validate_string(value_, node, 'EmailIntermediario')
+            self.EmailIntermediario = value_
+            self.EmailIntermediario_nsprefix_ = child_.prefix
+            # validate type tpEmail
+            self.validate_tpEmail(self.EmailIntermediario)
         elif nodeName_ == 'Discriminacao':
             value_ = child_.text
             value_ = self.gds_parse_string(value_, node, 'Discriminacao')
@@ -3360,6 +3529,70 @@ class tpNFe(GeneratedsSuper):
             self.Discriminacao_nsprefix_ = child_.prefix
             # validate type tpDiscriminacao
             self.validate_tpDiscriminacao(self.Discriminacao)
+        elif nodeName_ == 'ValorCargaTributaria' and child_.text:
+            sval_ = child_.text
+            fval_ = self.gds_parse_decimal(sval_, node, 'ValorCargaTributaria')
+            fval_ = self.gds_validate_decimal(fval_, node, 'ValorCargaTributaria')
+            self.ValorCargaTributaria = fval_
+            self.ValorCargaTributaria_nsprefix_ = child_.prefix
+            # validate type tpValor
+            self.validate_tpValor(self.ValorCargaTributaria)
+        elif nodeName_ == 'PercentualCargaTributaria' and child_.text:
+            sval_ = child_.text
+            fval_ = self.gds_parse_decimal(sval_, node, 'PercentualCargaTributaria')
+            fval_ = self.gds_validate_decimal(fval_, node, 'PercentualCargaTributaria')
+            self.PercentualCargaTributaria = fval_
+            self.PercentualCargaTributaria_nsprefix_ = child_.prefix
+            # validate type tpPercentualCargaTributaria
+            self.validate_tpPercentualCargaTributaria(self.PercentualCargaTributaria)
+        elif nodeName_ == 'FonteCargaTributaria':
+            value_ = child_.text
+            value_ = self.gds_parse_string(value_, node, 'FonteCargaTributaria')
+            value_ = self.gds_validate_string(value_, node, 'FonteCargaTributaria')
+            self.FonteCargaTributaria = value_
+            self.FonteCargaTributaria_nsprefix_ = child_.prefix
+            # validate type tpFonteCargaTributaria
+            self.validate_tpFonteCargaTributaria(self.FonteCargaTributaria)
+        elif nodeName_ == 'CodigoCEI' and child_.text:
+            sval_ = child_.text
+            ival_ = self.gds_parse_integer(sval_, node, 'CodigoCEI')
+            ival_ = self.gds_validate_integer(ival_, node, 'CodigoCEI')
+            self.CodigoCEI = ival_
+            self.CodigoCEI_nsprefix_ = child_.prefix
+            # validate type tpNumero
+            self.validate_tpNumero(self.CodigoCEI)
+        elif nodeName_ == 'MatriculaObra' and child_.text:
+            sval_ = child_.text
+            ival_ = self.gds_parse_integer(sval_, node, 'MatriculaObra')
+            ival_ = self.gds_validate_integer(ival_, node, 'MatriculaObra')
+            self.MatriculaObra = ival_
+            self.MatriculaObra_nsprefix_ = child_.prefix
+            # validate type tpNumero
+            self.validate_tpNumero(self.MatriculaObra)
+        elif nodeName_ == 'MunicipioPrestacao' and child_.text:
+            sval_ = child_.text
+            ival_ = self.gds_parse_integer(sval_, node, 'MunicipioPrestacao')
+            ival_ = self.gds_validate_integer(ival_, node, 'MunicipioPrestacao')
+            self.MunicipioPrestacao = ival_
+            self.MunicipioPrestacao_nsprefix_ = child_.prefix
+            # validate type tpCidade
+            self.validate_tpCidade(self.MunicipioPrestacao)
+        elif nodeName_ == 'NumeroEncapsulamento' and child_.text:
+            sval_ = child_.text
+            ival_ = self.gds_parse_integer(sval_, node, 'NumeroEncapsulamento')
+            ival_ = self.gds_validate_integer(ival_, node, 'NumeroEncapsulamento')
+            self.NumeroEncapsulamento = ival_
+            self.NumeroEncapsulamento_nsprefix_ = child_.prefix
+            # validate type tpNumero
+            self.validate_tpNumero(self.NumeroEncapsulamento)
+        elif nodeName_ == 'ValorTotalRecebido' and child_.text:
+            sval_ = child_.text
+            fval_ = self.gds_parse_decimal(sval_, node, 'ValorTotalRecebido')
+            fval_ = self.gds_validate_decimal(fval_, node, 'ValorTotalRecebido')
+            self.ValorTotalRecebido = fval_
+            self.ValorTotalRecebido_nsprefix_ = child_.prefix
+            # validate type tpValor
+            self.validate_tpValor(self.ValorTotalRecebido)
 # end class tpNFe
 
 
@@ -3389,11 +3622,23 @@ class tpRPS(GeneratedsSuper):
         MemberSpec_('RazaoSocialTomador', ['tpRazaoSocial', 'xs:string'], 0, 1, {'maxOccurs': '1', 'minOccurs': '0', 'name': 'RazaoSocialTomador', 'type': 'xs:string'}, None),
         MemberSpec_('EnderecoTomador', 'tpEndereco', 0, 1, {'maxOccurs': '1', 'minOccurs': '0', 'name': 'EnderecoTomador', 'type': 'tpEndereco'}, None),
         MemberSpec_('EmailTomador', ['tpEmail', 'xs:string'], 0, 1, {'maxOccurs': '1', 'minOccurs': '0', 'name': 'EmailTomador', 'type': 'xs:string'}, None),
+        MemberSpec_('CPFCNPJIntermediario', 'tpCPFCNPJ', 0, 1, {'maxOccurs': '1', 'minOccurs': '0', 'name': 'CPFCNPJIntermediario', 'type': 'tpCPFCNPJ'}, None),
+        MemberSpec_('InscricaoMunicipalIntermediario', ['tpInscricaoMunicipal', 'xs:long'], 0, 1, {'maxOccurs': '1', 'minOccurs': '0', 'name': 'InscricaoMunicipalIntermediario', 'type': 'xs:long'}, None),
+        MemberSpec_('ISSRetidoIntermediario', 'xs:string', 0, 1, {'maxOccurs': '1', 'minOccurs': '0', 'name': 'ISSRetidoIntermediario', 'type': 'xs:string'}, None),
+        MemberSpec_('EmailIntermediario', ['tpEmail', 'xs:string'], 0, 1, {'maxOccurs': '1', 'minOccurs': '0', 'name': 'EmailIntermediario', 'type': 'xs:string'}, None),
         MemberSpec_('Discriminacao', ['tpDiscriminacao', 'xs:string'], 0, 0, {'maxOccurs': '1', 'minOccurs': '1', 'name': 'Discriminacao', 'type': 'xs:string'}, None),
+        MemberSpec_('ValorCargaTributaria', ['tpValor', 'xs:decimal'], 0, 1, {'maxOccurs': '1', 'minOccurs': '0', 'name': 'ValorCargaTributaria', 'type': 'xs:decimal'}, None),
+        MemberSpec_('PercentualCargaTributaria', ['tpPercentualCargaTributaria', 'xs:decimal'], 0, 1, {'maxOccurs': '1', 'minOccurs': '0', 'name': 'PercentualCargaTributaria', 'type': 'xs:decimal'}, None),
+        MemberSpec_('FonteCargaTributaria', ['tpFonteCargaTributaria', 'xs:string'], 0, 1, {'maxOccurs': '1', 'minOccurs': '0', 'name': 'FonteCargaTributaria', 'type': 'xs:string'}, None),
+        MemberSpec_('CodigoCEI', ['tpNumero', 'xs:long'], 0, 1, {'maxOccurs': '1', 'minOccurs': '0', 'name': 'CodigoCEI', 'type': 'xs:long'}, None),
+        MemberSpec_('MatriculaObra', ['tpNumero', 'xs:long'], 0, 1, {'maxOccurs': '1', 'minOccurs': '0', 'name': 'MatriculaObra', 'type': 'xs:long'}, None),
+        MemberSpec_('MunicipioPrestacao', ['tpCidade', 'xs:int'], 0, 1, {'maxOccurs': '1', 'minOccurs': '0', 'name': 'MunicipioPrestacao', 'type': 'xs:int'}, None),
+        MemberSpec_('NumeroEncapsulamento', ['tpNumero', 'xs:long'], 0, 1, {'maxOccurs': '1', 'minOccurs': '0', 'name': 'NumeroEncapsulamento', 'type': 'xs:long'}, None),
+        MemberSpec_('ValorTotalRecebido', ['tpValor', 'xs:decimal'], 0, 1, {'maxOccurs': '1', 'minOccurs': '0', 'name': 'ValorTotalRecebido', 'type': 'xs:decimal'}, None),
     ]
     subclass = None
     superclass = None
-    def __init__(self, Assinatura=None, ChaveRPS=None, TipoRPS=None, DataEmissao=None, StatusRPS=None, TributacaoRPS=None, ValorServicos=None, ValorDeducoes=None, ValorPIS=None, ValorCOFINS=None, ValorINSS=None, ValorIR=None, ValorCSLL=None, CodigoServico=None, AliquotaServicos=None, ISSRetido=None, CPFCNPJTomador=None, InscricaoMunicipalTomador=None, InscricaoEstadualTomador=None, RazaoSocialTomador=None, EnderecoTomador=None, EmailTomador=None, Discriminacao=None, gds_collector_=None, **kwargs_):
+    def __init__(self, Assinatura=None, ChaveRPS=None, TipoRPS=None, DataEmissao=None, StatusRPS=None, TributacaoRPS=None, ValorServicos=None, ValorDeducoes=None, ValorPIS=None, ValorCOFINS=None, ValorINSS=None, ValorIR=None, ValorCSLL=None, CodigoServico=None, AliquotaServicos=None, ISSRetido=None, CPFCNPJTomador=None, InscricaoMunicipalTomador=None, InscricaoEstadualTomador=None, RazaoSocialTomador=None, EnderecoTomador=None, EmailTomador=None, CPFCNPJIntermediario=None, InscricaoMunicipalIntermediario=None, ISSRetidoIntermediario=None, EmailIntermediario=None, Discriminacao=None, ValorCargaTributaria=None, PercentualCargaTributaria=None, FonteCargaTributaria=None, CodigoCEI=None, MatriculaObra=None, MunicipioPrestacao=None, NumeroEncapsulamento=None, ValorTotalRecebido=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
@@ -3464,9 +3709,43 @@ class tpRPS(GeneratedsSuper):
         self.EmailTomador = EmailTomador
         self.validate_tpEmail(self.EmailTomador)
         self.EmailTomador_nsprefix_ = None
+        self.CPFCNPJIntermediario = CPFCNPJIntermediario
+        self.CPFCNPJIntermediario_nsprefix_ = None
+        self.InscricaoMunicipalIntermediario = InscricaoMunicipalIntermediario
+        self.validate_tpInscricaoMunicipal(self.InscricaoMunicipalIntermediario)
+        self.InscricaoMunicipalIntermediario_nsprefix_ = None
+        self.ISSRetidoIntermediario = ISSRetidoIntermediario
+        self.ISSRetidoIntermediario_nsprefix_ = None
+        self.EmailIntermediario = EmailIntermediario
+        self.validate_tpEmail(self.EmailIntermediario)
+        self.EmailIntermediario_nsprefix_ = None
         self.Discriminacao = Discriminacao
         self.validate_tpDiscriminacao(self.Discriminacao)
         self.Discriminacao_nsprefix_ = None
+        self.ValorCargaTributaria = ValorCargaTributaria
+        self.validate_tpValor(self.ValorCargaTributaria)
+        self.ValorCargaTributaria_nsprefix_ = None
+        self.PercentualCargaTributaria = PercentualCargaTributaria
+        self.validate_tpPercentualCargaTributaria(self.PercentualCargaTributaria)
+        self.PercentualCargaTributaria_nsprefix_ = None
+        self.FonteCargaTributaria = FonteCargaTributaria
+        self.validate_tpFonteCargaTributaria(self.FonteCargaTributaria)
+        self.FonteCargaTributaria_nsprefix_ = None
+        self.CodigoCEI = CodigoCEI
+        self.validate_tpNumero(self.CodigoCEI)
+        self.CodigoCEI_nsprefix_ = None
+        self.MatriculaObra = MatriculaObra
+        self.validate_tpNumero(self.MatriculaObra)
+        self.MatriculaObra_nsprefix_ = None
+        self.MunicipioPrestacao = MunicipioPrestacao
+        self.validate_tpCidade(self.MunicipioPrestacao)
+        self.MunicipioPrestacao_nsprefix_ = None
+        self.NumeroEncapsulamento = NumeroEncapsulamento
+        self.validate_tpNumero(self.NumeroEncapsulamento)
+        self.NumeroEncapsulamento_nsprefix_ = None
+        self.ValorTotalRecebido = ValorTotalRecebido
+        self.validate_tpValor(self.ValorTotalRecebido)
+        self.ValorTotalRecebido_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -3522,11 +3801,13 @@ class tpRPS(GeneratedsSuper):
                 lineno = self.gds_get_node_lineno_()
                 self.gds_collector_.add_message('Value "%(value)s"%(lineno)s is not of the correct base simple type (str)' % {"value": value, "lineno": lineno, })
                 return False
-            value = value
-            enumerations = ['T', 'F', 'I', 'J']
-            if value not in enumerations:
+            if len(value) > 1:
                 lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message('Value "%(value)s"%(lineno)s does not match xsd enumeration restriction on tpTributacaoNFe' % {"value" : encode_str_2_3(value), "lineno": lineno} )
+                self.gds_collector_.add_message('Value "%(value)s"%(lineno)s does not match xsd maxLength restriction on tpTributacaoNFe' % {"value" : encode_str_2_3(value), "lineno": lineno} )
+                result = False
+            if len(value) < 1:
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message('Value "%(value)s"%(lineno)s does not match xsd minLength restriction on tpTributacaoNFe' % {"value" : encode_str_2_3(value), "lineno": lineno} )
                 result = False
         return result
     def validate_tpValor(self, value):
@@ -3643,12 +3924,7 @@ class tpRPS(GeneratedsSuper):
                 lineno = self.gds_get_node_lineno_()
                 self.gds_collector_.add_message('Value "%(value)s"%(lineno)s does not match xsd minLength restriction on tpEmail' % {"value" : encode_str_2_3(value), "lineno": lineno} )
                 result = False
-            if not self.gds_validate_simple_patterns(
-                    self.validate_tpEmail_patterns_, value):
-                self.gds_collector_.add_message('Value "%s" does not match xsd pattern restrictions: %s' % (encode_str_2_3(value), self.validate_tpEmail_patterns_, ))
-                result = False
         return result
-    validate_tpEmail_patterns_ = [['^(^([0-9a-zA-Z]([-.\\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\\w]*[0-9a-zA-Z]\\.)+[a-zA-Z]{2,9})$)$']]
     def validate_tpDiscriminacao(self, value):
         result = True
         # Validate type tpDiscriminacao, a restriction on xs:string.
@@ -3661,11 +3937,73 @@ class tpRPS(GeneratedsSuper):
                 lineno = self.gds_get_node_lineno_()
                 self.gds_collector_.add_message('Value "%(value)s"%(lineno)s does not match xsd maxLength restriction on tpDiscriminacao' % {"value" : encode_str_2_3(value), "lineno": lineno} )
                 result = False
-            if len(value) < 0:
+            if len(value) < 1:
                 lineno = self.gds_get_node_lineno_()
                 self.gds_collector_.add_message('Value "%(value)s"%(lineno)s does not match xsd minLength restriction on tpDiscriminacao' % {"value" : encode_str_2_3(value), "lineno": lineno} )
                 result = False
         return result
+    def validate_tpPercentualCargaTributaria(self, value):
+        result = True
+        # Validate type tpPercentualCargaTributaria, a restriction on xs:decimal.
+        if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
+            if not isinstance(value, decimal_.Decimal):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message('Value "%(value)s"%(lineno)s is not of the correct base simple type (decimal_.Decimal)' % {"value": value, "lineno": lineno, })
+                return False
+            if value < 0:
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message('Value "%(value)s"%(lineno)s does not match xsd minInclusive restriction on tpPercentualCargaTributaria' % {"value": value, "lineno": lineno} )
+                result = False
+            if len(str(value)) >= 7:
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message('Value "%(value)s"%(lineno)s does not match xsd totalDigits restriction on tpPercentualCargaTributaria' % {"value": value, "lineno": lineno} )
+                result = False
+        return result
+    def validate_tpFonteCargaTributaria(self, value):
+        result = True
+        # Validate type tpFonteCargaTributaria, a restriction on xs:string.
+        if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message('Value "%(value)s"%(lineno)s is not of the correct base simple type (str)' % {"value": value, "lineno": lineno, })
+                return False
+            if len(value) > 10:
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message('Value "%(value)s"%(lineno)s does not match xsd maxLength restriction on tpFonteCargaTributaria' % {"value" : encode_str_2_3(value), "lineno": lineno} )
+                result = False
+            if len(value) < 0:
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message('Value "%(value)s"%(lineno)s does not match xsd minLength restriction on tpFonteCargaTributaria' % {"value" : encode_str_2_3(value), "lineno": lineno} )
+                result = False
+        return result
+    def validate_tpNumero(self, value):
+        result = True
+        # Validate type tpNumero, a restriction on xs:long.
+        if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
+            if not isinstance(value, int):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message('Value "%(value)s"%(lineno)s is not of the correct base simple type (int)' % {"value": value, "lineno": lineno, })
+                return False
+            if not self.gds_validate_simple_patterns(
+                    self.validate_tpNumero_patterns_, value):
+                self.gds_collector_.add_message('Value "%s" does not match xsd pattern restrictions: %s' % (encode_str_2_3(value), self.validate_tpNumero_patterns_, ))
+                result = False
+        return result
+    validate_tpNumero_patterns_ = [['^([0-9]{1,12})$']]
+    def validate_tpCidade(self, value):
+        result = True
+        # Validate type tpCidade, a restriction on xs:int.
+        if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
+            if not isinstance(value, int):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message('Value "%(value)s"%(lineno)s is not of the correct base simple type (int)' % {"value": value, "lineno": lineno, })
+                return False
+            if not self.gds_validate_simple_patterns(
+                    self.validate_tpCidade_patterns_, value):
+                self.gds_collector_.add_message('Value "%s" does not match xsd pattern restrictions: %s' % (encode_str_2_3(value), self.validate_tpCidade_patterns_, ))
+                result = False
+        return result
+    validate_tpCidade_patterns_ = [['^([0-9]{7})$']]
     def hasContent_(self):
         if (
             self.Assinatura is not None or
@@ -3690,7 +4028,19 @@ class tpRPS(GeneratedsSuper):
             self.RazaoSocialTomador is not None or
             self.EnderecoTomador is not None or
             self.EmailTomador is not None or
-            self.Discriminacao is not None
+            self.CPFCNPJIntermediario is not None or
+            self.InscricaoMunicipalIntermediario is not None or
+            self.ISSRetidoIntermediario is not None or
+            self.EmailIntermediario is not None or
+            self.Discriminacao is not None or
+            self.ValorCargaTributaria is not None or
+            self.PercentualCargaTributaria is not None or
+            self.FonteCargaTributaria is not None or
+            self.CodigoCEI is not None or
+            self.MatriculaObra is not None or
+            self.MunicipioPrestacao is not None or
+            self.NumeroEncapsulamento is not None or
+            self.ValorTotalRecebido is not None
         ):
             return True
         else:
@@ -3810,10 +4160,57 @@ class tpRPS(GeneratedsSuper):
             namespaceprefix_ = self.EmailTomador_nsprefix_ + ':' if (UseCapturedNS_ and self.EmailTomador_nsprefix_) else ''
             showIndent(outfile, level, pretty_print)
             outfile.write('<%sEmailTomador>%s</%sEmailTomador>%s' % (namespaceprefix_ , self.gds_encode(self.gds_format_string(quote_xml(self.EmailTomador), input_name='EmailTomador')), namespaceprefix_ , eol_))
+        if self.CPFCNPJIntermediario is not None:
+            namespaceprefix_ = self.CPFCNPJIntermediario_nsprefix_ + ':' if (UseCapturedNS_ and self.CPFCNPJIntermediario_nsprefix_) else ''
+            self.CPFCNPJIntermediario.export(outfile, level, namespaceprefix_, namespacedef_='', name_='CPFCNPJIntermediario', pretty_print=pretty_print)
+        if self.InscricaoMunicipalIntermediario is not None:
+            namespaceprefix_ = self.InscricaoMunicipalIntermediario_nsprefix_ + ':' if (UseCapturedNS_ and self.InscricaoMunicipalIntermediario_nsprefix_) else ''
+            showIndent(outfile, level, pretty_print)
+            outfile.write('<%sInscricaoMunicipalIntermediario>%s</%sInscricaoMunicipalIntermediario>%s' % (namespaceprefix_ , self.gds_format_integer(self.InscricaoMunicipalIntermediario, input_name='InscricaoMunicipalIntermediario'), namespaceprefix_ , eol_))
+        if self.ISSRetidoIntermediario is not None:
+            namespaceprefix_ = self.ISSRetidoIntermediario_nsprefix_ + ':' if (UseCapturedNS_ and self.ISSRetidoIntermediario_nsprefix_) else ''
+            showIndent(outfile, level, pretty_print)
+            outfile.write('<%sISSRetidoIntermediario>%s</%sISSRetidoIntermediario>%s' % (namespaceprefix_ , self.gds_encode(self.gds_format_string(quote_xml(self.ISSRetidoIntermediario), input_name='ISSRetidoIntermediario')), namespaceprefix_ , eol_))
+        if self.EmailIntermediario is not None:
+            namespaceprefix_ = self.EmailIntermediario_nsprefix_ + ':' if (UseCapturedNS_ and self.EmailIntermediario_nsprefix_) else ''
+            showIndent(outfile, level, pretty_print)
+            outfile.write('<%sEmailIntermediario>%s</%sEmailIntermediario>%s' % (namespaceprefix_ , self.gds_encode(self.gds_format_string(quote_xml(self.EmailIntermediario), input_name='EmailIntermediario')), namespaceprefix_ , eol_))
         if self.Discriminacao is not None:
             namespaceprefix_ = self.Discriminacao_nsprefix_ + ':' if (UseCapturedNS_ and self.Discriminacao_nsprefix_) else ''
             showIndent(outfile, level, pretty_print)
             outfile.write('<%sDiscriminacao>%s</%sDiscriminacao>%s' % (namespaceprefix_ , self.gds_encode(self.gds_format_string(quote_xml(self.Discriminacao), input_name='Discriminacao')), namespaceprefix_ , eol_))
+        if self.ValorCargaTributaria is not None:
+            namespaceprefix_ = self.ValorCargaTributaria_nsprefix_ + ':' if (UseCapturedNS_ and self.ValorCargaTributaria_nsprefix_) else ''
+            showIndent(outfile, level, pretty_print)
+            outfile.write('<%sValorCargaTributaria>%s</%sValorCargaTributaria>%s' % (namespaceprefix_ , self.gds_format_decimal(self.ValorCargaTributaria, input_name='ValorCargaTributaria'), namespaceprefix_ , eol_))
+        if self.PercentualCargaTributaria is not None:
+            namespaceprefix_ = self.PercentualCargaTributaria_nsprefix_ + ':' if (UseCapturedNS_ and self.PercentualCargaTributaria_nsprefix_) else ''
+            showIndent(outfile, level, pretty_print)
+            outfile.write('<%sPercentualCargaTributaria>%s</%sPercentualCargaTributaria>%s' % (namespaceprefix_ , self.gds_format_decimal(self.PercentualCargaTributaria, input_name='PercentualCargaTributaria'), namespaceprefix_ , eol_))
+        if self.FonteCargaTributaria is not None:
+            namespaceprefix_ = self.FonteCargaTributaria_nsprefix_ + ':' if (UseCapturedNS_ and self.FonteCargaTributaria_nsprefix_) else ''
+            showIndent(outfile, level, pretty_print)
+            outfile.write('<%sFonteCargaTributaria>%s</%sFonteCargaTributaria>%s' % (namespaceprefix_ , self.gds_encode(self.gds_format_string(quote_xml(self.FonteCargaTributaria), input_name='FonteCargaTributaria')), namespaceprefix_ , eol_))
+        if self.CodigoCEI is not None:
+            namespaceprefix_ = self.CodigoCEI_nsprefix_ + ':' if (UseCapturedNS_ and self.CodigoCEI_nsprefix_) else ''
+            showIndent(outfile, level, pretty_print)
+            outfile.write('<%sCodigoCEI>%s</%sCodigoCEI>%s' % (namespaceprefix_ , self.gds_format_integer(self.CodigoCEI, input_name='CodigoCEI'), namespaceprefix_ , eol_))
+        if self.MatriculaObra is not None:
+            namespaceprefix_ = self.MatriculaObra_nsprefix_ + ':' if (UseCapturedNS_ and self.MatriculaObra_nsprefix_) else ''
+            showIndent(outfile, level, pretty_print)
+            outfile.write('<%sMatriculaObra>%s</%sMatriculaObra>%s' % (namespaceprefix_ , self.gds_format_integer(self.MatriculaObra, input_name='MatriculaObra'), namespaceprefix_ , eol_))
+        if self.MunicipioPrestacao is not None:
+            namespaceprefix_ = self.MunicipioPrestacao_nsprefix_ + ':' if (UseCapturedNS_ and self.MunicipioPrestacao_nsprefix_) else ''
+            showIndent(outfile, level, pretty_print)
+            outfile.write('<%sMunicipioPrestacao>%s</%sMunicipioPrestacao>%s' % (namespaceprefix_ , self.gds_format_integer(self.MunicipioPrestacao, input_name='MunicipioPrestacao'), namespaceprefix_ , eol_))
+        if self.NumeroEncapsulamento is not None:
+            namespaceprefix_ = self.NumeroEncapsulamento_nsprefix_ + ':' if (UseCapturedNS_ and self.NumeroEncapsulamento_nsprefix_) else ''
+            showIndent(outfile, level, pretty_print)
+            outfile.write('<%sNumeroEncapsulamento>%s</%sNumeroEncapsulamento>%s' % (namespaceprefix_ , self.gds_format_integer(self.NumeroEncapsulamento, input_name='NumeroEncapsulamento'), namespaceprefix_ , eol_))
+        if self.ValorTotalRecebido is not None:
+            namespaceprefix_ = self.ValorTotalRecebido_nsprefix_ + ':' if (UseCapturedNS_ and self.ValorTotalRecebido_nsprefix_) else ''
+            showIndent(outfile, level, pretty_print)
+            outfile.write('<%sValorTotalRecebido>%s</%sValorTotalRecebido>%s' % (namespaceprefix_ , self.gds_format_decimal(self.ValorTotalRecebido, input_name='ValorTotalRecebido'), namespaceprefix_ , eol_))
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -3996,6 +4393,33 @@ class tpRPS(GeneratedsSuper):
             self.EmailTomador_nsprefix_ = child_.prefix
             # validate type tpEmail
             self.validate_tpEmail(self.EmailTomador)
+        elif nodeName_ == 'CPFCNPJIntermediario':
+            obj_ = tpCPFCNPJ.factory(parent_object_=self)
+            obj_.build(child_, gds_collector_=gds_collector_)
+            self.CPFCNPJIntermediario = obj_
+            obj_.original_tagname_ = 'CPFCNPJIntermediario'
+        elif nodeName_ == 'InscricaoMunicipalIntermediario' and child_.text:
+            sval_ = child_.text
+            ival_ = self.gds_parse_integer(sval_, node, 'InscricaoMunicipalIntermediario')
+            ival_ = self.gds_validate_integer(ival_, node, 'InscricaoMunicipalIntermediario')
+            self.InscricaoMunicipalIntermediario = ival_
+            self.InscricaoMunicipalIntermediario_nsprefix_ = child_.prefix
+            # validate type tpInscricaoMunicipal
+            self.validate_tpInscricaoMunicipal(self.InscricaoMunicipalIntermediario)
+        elif nodeName_ == 'ISSRetidoIntermediario':
+            value_ = child_.text
+            value_ = self.gds_parse_string(value_, node, 'ISSRetidoIntermediario')
+            value_ = self.gds_validate_string(value_, node, 'ISSRetidoIntermediario')
+            self.ISSRetidoIntermediario = value_
+            self.ISSRetidoIntermediario_nsprefix_ = child_.prefix
+        elif nodeName_ == 'EmailIntermediario':
+            value_ = child_.text
+            value_ = self.gds_parse_string(value_, node, 'EmailIntermediario')
+            value_ = self.gds_validate_string(value_, node, 'EmailIntermediario')
+            self.EmailIntermediario = value_
+            self.EmailIntermediario_nsprefix_ = child_.prefix
+            # validate type tpEmail
+            self.validate_tpEmail(self.EmailIntermediario)
         elif nodeName_ == 'Discriminacao':
             value_ = child_.text
             value_ = self.gds_parse_string(value_, node, 'Discriminacao')
@@ -4004,6 +4428,70 @@ class tpRPS(GeneratedsSuper):
             self.Discriminacao_nsprefix_ = child_.prefix
             # validate type tpDiscriminacao
             self.validate_tpDiscriminacao(self.Discriminacao)
+        elif nodeName_ == 'ValorCargaTributaria' and child_.text:
+            sval_ = child_.text
+            fval_ = self.gds_parse_decimal(sval_, node, 'ValorCargaTributaria')
+            fval_ = self.gds_validate_decimal(fval_, node, 'ValorCargaTributaria')
+            self.ValorCargaTributaria = fval_
+            self.ValorCargaTributaria_nsprefix_ = child_.prefix
+            # validate type tpValor
+            self.validate_tpValor(self.ValorCargaTributaria)
+        elif nodeName_ == 'PercentualCargaTributaria' and child_.text:
+            sval_ = child_.text
+            fval_ = self.gds_parse_decimal(sval_, node, 'PercentualCargaTributaria')
+            fval_ = self.gds_validate_decimal(fval_, node, 'PercentualCargaTributaria')
+            self.PercentualCargaTributaria = fval_
+            self.PercentualCargaTributaria_nsprefix_ = child_.prefix
+            # validate type tpPercentualCargaTributaria
+            self.validate_tpPercentualCargaTributaria(self.PercentualCargaTributaria)
+        elif nodeName_ == 'FonteCargaTributaria':
+            value_ = child_.text
+            value_ = self.gds_parse_string(value_, node, 'FonteCargaTributaria')
+            value_ = self.gds_validate_string(value_, node, 'FonteCargaTributaria')
+            self.FonteCargaTributaria = value_
+            self.FonteCargaTributaria_nsprefix_ = child_.prefix
+            # validate type tpFonteCargaTributaria
+            self.validate_tpFonteCargaTributaria(self.FonteCargaTributaria)
+        elif nodeName_ == 'CodigoCEI' and child_.text:
+            sval_ = child_.text
+            ival_ = self.gds_parse_integer(sval_, node, 'CodigoCEI')
+            ival_ = self.gds_validate_integer(ival_, node, 'CodigoCEI')
+            self.CodigoCEI = ival_
+            self.CodigoCEI_nsprefix_ = child_.prefix
+            # validate type tpNumero
+            self.validate_tpNumero(self.CodigoCEI)
+        elif nodeName_ == 'MatriculaObra' and child_.text:
+            sval_ = child_.text
+            ival_ = self.gds_parse_integer(sval_, node, 'MatriculaObra')
+            ival_ = self.gds_validate_integer(ival_, node, 'MatriculaObra')
+            self.MatriculaObra = ival_
+            self.MatriculaObra_nsprefix_ = child_.prefix
+            # validate type tpNumero
+            self.validate_tpNumero(self.MatriculaObra)
+        elif nodeName_ == 'MunicipioPrestacao' and child_.text:
+            sval_ = child_.text
+            ival_ = self.gds_parse_integer(sval_, node, 'MunicipioPrestacao')
+            ival_ = self.gds_validate_integer(ival_, node, 'MunicipioPrestacao')
+            self.MunicipioPrestacao = ival_
+            self.MunicipioPrestacao_nsprefix_ = child_.prefix
+            # validate type tpCidade
+            self.validate_tpCidade(self.MunicipioPrestacao)
+        elif nodeName_ == 'NumeroEncapsulamento' and child_.text:
+            sval_ = child_.text
+            ival_ = self.gds_parse_integer(sval_, node, 'NumeroEncapsulamento')
+            ival_ = self.gds_validate_integer(ival_, node, 'NumeroEncapsulamento')
+            self.NumeroEncapsulamento = ival_
+            self.NumeroEncapsulamento_nsprefix_ = child_.prefix
+            # validate type tpNumero
+            self.validate_tpNumero(self.NumeroEncapsulamento)
+        elif nodeName_ == 'ValorTotalRecebido' and child_.text:
+            sval_ = child_.text
+            fval_ = self.gds_parse_decimal(sval_, node, 'ValorTotalRecebido')
+            fval_ = self.gds_validate_decimal(fval_, node, 'ValorTotalRecebido')
+            self.ValorTotalRecebido = fval_
+            self.ValorTotalRecebido_nsprefix_ = child_.prefix
+            # validate type tpValor
+            self.validate_tpValor(self.ValorTotalRecebido)
 # end class tpRPS
 
 
@@ -5076,7 +5564,7 @@ class CabecalhoType(GeneratedsSuper):
 
 class DetalheType(GeneratedsSuper):
     """Detalhe do pedido. Cada item de detalhe deverá conter a chave de uma
-    NF-e ou a chave de um RPS."""
+    NFS-e ou a chave de um RPS."""
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_('ChaveRPS', 'tpChaveRPS', 0, 0, {'maxOccurs': '1', 'minOccurs': '1', 'name': 'ChaveRPS', 'type': 'tpChaveRPS'}, 3),
@@ -5842,6 +6330,12 @@ NamespaceToDefMappings_ = {'http://www.prefeitura.sp.gov.br/nfe': [],
                                                 'TiposNFe_v01.xsd',
                                                 'ST'),
                                                ('tpVersao',
+                                                'TiposNFe_v01.xsd',
+                                                'ST'),
+                                               ('tpPercentualCargaTributaria',
+                                                'TiposNFe_v01.xsd',
+                                                'ST'),
+                                               ('tpFonteCargaTributaria',
                                                 'TiposNFe_v01.xsd',
                                                 'ST'),
                                                ('tpEvento',
