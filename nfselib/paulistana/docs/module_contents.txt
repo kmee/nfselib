@@ -21,3 +21,7 @@ Module contents
     :members:
     :undoc-members:
     :show-inheritance:
+.. automodule:: PedidoConsultaNFe
+    :members:
+    :undoc-members:
+    :show-inheritance:
