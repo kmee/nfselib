@@ -110,11 +110,11 @@ def parsexmlstring_(instring, parser=None, **kwargs):
 #
 
 try:
-    from generatedsnamespaces import GenerateDSNamespaceDefs as GenerateDSNamespaceDefs_
+    from .generatedsnamespaces import GenerateDSNamespaceDefs as GenerateDSNamespaceDefs_
 except ImportError:
     GenerateDSNamespaceDefs_ = {}
 try:
-    from generatedsnamespaces import GenerateDSNamespaceTypePrefixes as GenerateDSNamespaceTypePrefixes_
+    from .generatedsnamespaces import GenerateDSNamespaceTypePrefixes as GenerateDSNamespaceTypePrefixes_
 except ImportError:
     GenerateDSNamespaceTypePrefixes_ = {}
 
@@ -967,9 +967,9 @@ class cabecalho(GeneratedsSuper):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
+        self.ns_prefix_ = GenerateDSNamespaceTypePrefixes_.get('cabecalho')
         self.versao = _cast(None, versao)
-        self.versao_nsprefix_ = None
+        self.versao_nsprefix_ = GenerateDSNamespaceTypePrefixes_.get('cabecalho')
         self.versaoDados = versaoDados
         self.validate_tsVersao(self.versaoDados)
         self.versaoDados_nsprefix_ = None
