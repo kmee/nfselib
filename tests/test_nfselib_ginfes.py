@@ -58,9 +58,9 @@ def execute_test(path, servico):
         assert len(diff) == 0
 
 def test_enviar_lote_rps_envio():
-    xml_path = 'nfse/ginfes/enviar_lote_rps_envio'
+    xml_path = 'tests/nfse/ginfes/enviar_lote_rps_envio'
     execute_test(xml_path, servico_enviar_lote_rps_envio)
 
 def test_consultar_nfse_rps_envio():
-    xml_path = 'nfse/ginfes/consultar_nfse_rps_envio'
+    xml_path = 'tests/nfse/ginfes/consultar_nfse_rps_envio'
     execute_test(xml_path, servico_consultar_nfse_rps_envio)
